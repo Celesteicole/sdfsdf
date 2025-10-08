@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hall Hopkins Architecture LLC — Bloomington, IL</title>
+  <meta name="description" content="Hall Hopkins Architecture LLC is a Bloomington, IL studio crafting context-driven residential and small commercial architecture across Central Illinois." />
+  <meta name="theme-color" content="#1f2937" />
+  <style>
+    /* ============ RESET & ROOT ============ */
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Helvetica, Arial, sans-serif;
+      color: #0f172a; /* slate-900 */
+      background: #f8fafc; /* slate-50 */
+      line-height: 1.6;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    :root{
+      --bg: #0b1220;
+      --ink: #0f172a;
+      --muted: #334155;
+      --brand: #8b5cf6; /* violet-500 */
+      --brand-700:#6d28d9;
+      --accent: #14b8a6; /* teal-500 */
+      --card:#ffffff;
+      --ring:#c7d2fe;
+      --soft:#eef2ff; /* indigo-50 */
+      --shadow: 0 10px 30px rgba(2, 6, 23,.08);
+      --radius: 18px;
+      --radius-sm: 12px;
+      --radius-lg: 26px;
+      --maxw: 1180px;
+    }
+
+    /* ============ UTILITIES ============ */
+    .container { width: 100%; max-width: var(--maxw); margin-inline: auto; padding-inline: 20px; }
+    .section { padding: 80px 0; }
+    .section.compact { padding: 56px 0; }
+    .eyebrow {
+      font-size: 13px; letter-spacing: .12em; text-transform: uppercase; color: var(--brand);
+      font-weight: 700; margin-bottom: 8px;
+    }
+    .title { font-size: clamp(28px, 4vw, 44px); line-height: 1.15; margin: 0 0 12px; }
+    .subtitle { font-size: clamp(16px, 2.2vw, 20px); color: var(--muted); margin: 0 0 6px; }
+    .lead { font-size: clamp(18px, 2.8vw, 22px); color: #0f172a; margin: 0 0 16px; }
+    .muted { color: var(--muted); }
+    .grid { display: grid; gap: 24px; }
+    .grid-2 { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0,1fr)); }
+    .grid-4 { grid-template-columns: repeat(4, minmax(0,1fr)); }
+    @media (max-width: 980px){ .grid-4{ grid-template-columns: repeat(2, minmax(0,1fr)); } }
+    @media (max-width: 760px){ .grid-3, .grid-2{ grid-template-columns: 1fr; } }
+
+    .card{
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      border: 1px solid #e2e8f0;
+    }
+    .card.pad{ padding: 24px 22px; }
+    .pill{
+      display: inline-flex; gap: 10px; align-items: center;
+      background: #fff; color: #111827; border: 1px solid #e5e7eb;
+      border-radius: 999px; padding: 10px 14px; font-weight: 600; font-size: 14px;
+      box-shadow: var(--shadow);
+    }
+    .btn{
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 12px 18px; border-radius: 999px; border: 0; cursor: pointer;
+      background: var(--brand); color: white; font-weight: 700; letter-spacing: .01em;
+      box-shadow: 0 8px 18px rgba(139,92,246,.25);
+    }
+    .btn:hover{ background: var(--brand-700); }
+    .btn.ghost{ background: transparent; color: var(--brand); border: 2px solid var(--brand); }
+    .check { width: 18px; height: 18px; border-radius: 50%; background: var(--accent); display: inline-block; }
+    .tag{ display:inline-block; font-size:12px; padding:6px 10px; background:#f1f5f9; border-radius:999px; border:1px solid #e5e7eb; color:#334155; font-weight:600; }
+
+    /* ============ HEADER ============ */
+    header{
+      position: sticky; top: 0; z-index: 40;
+      background: rgba(248,250,252,.75); backdrop-filter: blur(8px); border-bottom: 1px solid #e5e7eb;
+    }
+    .nav{
+      display:flex; align-items:center; justify-content:space-between; height: 72px;
+    }
+    .brand{ display:flex; align-items:center; gap:12px; font-weight:900; letter-spacing:.2px; }
+    .logo{
+      width: 38px; height: 38px; border-radius: 10px;
+      background: linear-gradient(135deg, var(--brand) 0%, #06b6d4 100%);
+      box-shadow: 0 10px 18px rgba(20,184,166,.25);
+    }
+    .nav a{ color:#0f172a; font-weight:600; opacity:.9; }
+    .nav ul{ display:flex; gap: 22px; list-style:none; padding:0; margin:0; }
+    @media (max-width:860px){ .nav ul{ display:none; } }
+
+    /* ============ HERO ============ */
+    .hero{
+      position: relative;
+      background: radial-gradient(80% 100% at 10% 0%, #ede9fe, transparent 55%),
+                  radial-gradient(60% 80% at 100% 0%, #d1fae5, transparent 60%),
+                  #ffffff;
+      overflow: hidden;
+    }
+    .hero .wrap{ display:grid; grid-template-columns: 1.2fr .8fr; gap: 28px; align-items: center; }
+    @media (max-width: 980px){ .hero .wrap{ grid-template-columns: 1fr; } }
+
+    .hero-visual{
+      position: relative; aspect-ratio: 16/11; border-radius: var(--radius-lg);
+      overflow: hidden; box-shadow: var(--shadow); border: 1px solid #e5e7eb;
+    }
+    .hero-visual img{ width: 100%; height: 100%; object-fit: cover; }
+    .hero-badge{
+      position:absolute; right:18px; bottom:18px; background:#ffffff; border:1px solid #e5e7eb;
+      border-radius: 14px; padding: 12px 14px; box-shadow: var(--shadow);
+      display:flex; gap:16px; align-items:center;
+    }
+    .hero-stats{ display:flex; gap:20px; flex-wrap:wrap; margin-top: 16px; }
+    .hero-stats .stat{ background: #ffffff; border:1px solid #e5e7eb; border-radius: 14px; padding:10px 14px; font-weight:700; }
+
+    /* ============ ABOUT ============ */
+    .about .fact{
+      display:flex; gap:14px; align-items:flex-start; background:#ffffff; border:1px solid #e5e7eb;
+      border-radius: var(--radius); padding:14px 16px; box-shadow: var(--shadow);
+    }
+
+    /* ============ SERVICES & FEATURE CARDS ============ */
+    .service{ display:flex; flex-direction:column; gap:12px; }
+    .service h3{ margin:0; }
+    .icon{
+      width: 44px; height: 44px; border-radius: 12px; display:grid; place-items:center; font-weight:900;
+      background: #ede9fe; color: #6d28d9; border: 1px solid #c4b5fd;
+    }
+    .feature{ display:flex; gap:16px; align-items:flex-start; }
+
+    /* ============ PHOTO STRIPS ============ */
+    .photos { position: relative; }
+    .photo-grid{ display:grid; grid-template-columns: 2fr 1fr 1fr; gap: 18px; }
+    .photo-grid div{ border-radius: var(--radius); overflow:hidden; border:1px solid #e5e7eb; box-shadow: var(--shadow); }
+    .photo-grid img{ width:100%; height:100%; object-fit:cover; }
+    @media (max-width: 980px){ .photo-grid{ grid-template-columns: 1fr; } }
+
+    /* ============ TIMELINE / PROCESS ============ */
+    .timeline{ position:relative; padding-left: 12px; }
+    .timeline::before{
+      content:""; position:absolute; left:24px; top:0; bottom:0; width:3px;
+      background: linear-gradient(#e5e7eb, #c7d2fe);
+      border-radius: 8px;
+    }
+    .stage{
+      position:relative; margin-left: 0; padding-left: 64px; padding-bottom: 22px;
+    }
+    .stage::before{
+      content:""; position:absolute; left:14px; top:4px; width:24px; height:24px; border-radius:50%;
+      background:#fff; border:3px solid var(--brand); box-shadow: 0 3px 10px rgba(139,92,246,.25);
+    }
+    .stage .step{ font-weight:900; color: var(--brand-700); }
+
+    /* ============ CONTACT FORM ============ */
+    form{
+      display:grid; gap:14px;
+    }
+    input, textarea, select{
+      width: 100%; padding: 12px 14px;
+      border-radius: 12px; border: 1px solid #d1d5db; background: #fff; color: #0f172a;
+      outline: none; transition: box-shadow .2s, border-color .2s;
+    }
+    input:focus, textarea:focus, select:focus{ box-shadow: 0 0 0 4px var(--ring); border-color: #6366f1; }
+    textarea{ min-height: 140px; resize: vertical; }
+    .form-row{ display:grid; gap:14px; grid-template-columns: repeat(2, minmax(0,1fr)); }
+    @media (max-width:760px){ .form-row{ grid-template-columns: 1fr; } }
+    .form-note{ font-size: 12px; color:#475569; }
+
+    /* ============ FOOTER ============ */
+    footer{
+      background: #0f172a; color: #e2e8f0; padding: 40px 0 50px;
+    }
+    footer a{ color:#c7d2fe; }
+    .foot-grid{ display: grid; gap: 20px; grid-template-columns: 2fr 1fr; }
+    @media (max-width:760px){ .foot-grid{ grid-template-columns: 1fr; } }
+
+    /* ============ SPACERS & SMALL ELEMENTS ============ */
+    .kpis{ display:grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap:18px; }
+    @media (max-width:980px){ .kpis{ grid-template-columns: repeat(2, minmax(0,1fr)); } }
+    .kpi{ background:#ffffff; border:1px solid #e5e7eb; border-radius: 14px; padding: 18px; text-align:center; box-shadow: var(--shadow); }
+    .kpi .n{ font-size: 28px; font-weight: 900; }
+    .divider{ height:1px; background:#e5e7eb; margin: 18px 0; }
+
+    /* accessibility helpers for icons replaced by text */
+    .sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+  </style>
+</head>
+<body>
+
+  <!-- ========================= HEADER ========================= -->
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <span>Hall Hopkins Architecture LLC</span>
+      </div>
+      <nav aria-label="Primary">
+        <ul>
+          <li><a href="#welcome">Work</a></li>
+          <li><a href="#about">Studio</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#photos-1">Portfolio</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <a class="pill" href="#contact"><span class="check" aria-hidden="true"></span> Start a Project</a>
+    </div>
+  </header>
+
+  <!-- ========================= HERO / MAIN SCREEN ========================= -->
+  <section id="welcome" class="hero section">
+    <div class="container wrap">
+      <div>
+        <p class="eyebrow">Context-Driven Architecture</p>
+        <h1 class="title">Modern spaces shaped by the rhythm of Central Illinois.</h1>
+        <p class="lead">
+          We are a Bloomington-based studio designing climate-aware homes and intimate commercial spaces.
+          Every plan begins with daylight, material honesty, and the way you live—not with a catalog.
+        </p>
+        <p class="subtitle">Licensed in Illinois. Serving Bloomington-Normal, Champaign-Urbana, Peoria, and the surrounding region.</p>
+        <div class="hero-stats">
+          <span class="stat">12+ years regional practice</span>
+          <span class="stat">85% projects from referrals</span>
+          <span class="stat">Net-zero ready options</span>
+          <span class="stat">Historic fabric expertise</span>
+        </div>
+        <div style="margin-top:18px; display:flex; gap:12px; flex-wrap:wrap;">
+          <a class="btn" href="#contact">Request a Feasibility Call</a>
+          <a class="btn ghost" href="#services">Explore Our Services</a>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=1600&auto=format&fit=crop" alt="Modern residential interior with natural light" />
+        <div class="hero-badge" aria-label="Highlights">
+          <div class="tag">Residential</div>
+          <div class="tag">Adaptive Reuse</div>
+          <div class="tag">Community</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================= ABOUT ========================= -->
+  <section id="about" class="section about">
+    <div class="container">
+      <p class="eyebrow">Who We Are</p>
+      <h2 class="title">A nimble studio rooted in Bloomington’s neighborhoods.</h2>
+      <p class="subtitle">
+        Led by principal architect <strong>Celeste Hall</strong>, Hall Hopkins Architecture LLC pairs rigorous problem-solving with
+        a warm, human scale. We translate constraints—budget, code, site, history—into clear, buildable solutions.
+      </p>
+
+      <div class="grid grid-3" style="margin-top: 22px;">
+        <div class="fact">
+          <div class="icon" aria-hidden="true">01</div>
+          <div>
+            <h3 class="subtitle" style="margin:0 0 4px;">Place before style</h3>
+            <p class="muted">We begin with your site’s light, wind, and street rhythm. The result is architecture that feels inevitable—fitting both today and decades from now.</p>
+          </div>
+        </div>
+        <div class="fact">
+          <div class="icon" aria-hidden="true">02</div>
+          <div>
+            <h3 class="subtitle" style="margin:0 0 4px;">Craft you can live with</h3>
+            <p class="muted">Details are drawn for the people who will touch them daily: durable finishes, serviceable assemblies, and layouts that simply work.</p>
+          </div>
+        </div>
+        <div class="fact">
+          <div class="icon" aria-hidden="true">03</div>
+          <div>
+            <h3 class="subtitle" style="margin:0 0 4px;">Clear budgets, honest timelines</h3>
+            <p class="muted">We establish scope early, price options transparently, and protect contingencies so there are fewer surprises during construction.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <p class="muted">
+        From additions along historic brick streets to compact mixed-use buildings, our portfolio favors
+        comfortable daylight, quiet mechanical systems, and energy models that pay you back. We draw until the plan is calm.
+      </p>
+    </div>
+  </section>
+
+  <!-- ========================= SERVICES ========================= -->
+  <section id="services" class="section">
+    <div class="container">
+      <p class="eyebrow">What We Do</p>
+      <h2 class="title">Focused services for real projects and real budgets.</h2>
+      <p class="subtitle">Three offerings cover most client needs; each can expand to fit complex sites or regulatory reviews.</p>
+
+      <div class="grid grid-3" style="margin-top: 20px;">
+        <!-- Service 1 -->
+        <article class="card pad service">
+          <div class="icon" aria-hidden="true">A</div>
+          <h3>Custom Homes & Major Renovations</h3>
+          <p class="muted">
+            We design new residences and transformative additions with envelope-first thinking:
+            orientation, insulation, and mechanical systems that reduce bills without sacrificing comfort.
+            Our documents guide competitive bidding and efficient construction.
+          </p>
+          <div class="kpis">
+
+          </div>
+        </article>
+
+        <!-- Service 2 -->
+        <article class="card pad service">
+          <div class="icon" aria-hidden="true">B</div>
+          <h3>Adaptive Reuse & Small Commercial</h3>
+          <p class="muted">
+            From cafés in former garages to office fit-outs in mid-century shells, we navigate change-of-use,
+            accessibility upgrades, and energy code compliance. Tenants get daylight, wayfinding, and acoustics
+            that make small spaces perform like big ones.
+          </p>
+          <ul class="muted" style="margin:0; padding-left: 18px;">
+            <li>Code studies and zoning narratives</li>
+            <li>Permit drawings and contractor coordination</li>
+            <li>Signage, storefront, and streetscape guidance</li>
+          </ul>
+        </article>
+
+        <!-- Service 3 -->
+        <article class="card pad service">
+          <div class="icon" aria-hidden="true">C</div>
+          <h3>Pre-Design & Feasibility</h3>
+          <p class="muted">
+            When the site or budget is uncertain, we build clarity quickly: test-fit plans, massing studies,
+            and order-of-magnitude costs. You’ll know what fits, what the city will allow, and how to phase
+            the work if needed.
+          </p>
+          <div class="muted">
+            Includes: site walk, utility review, permitting path, and a concise PDF you can share with lenders or partners.
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================= PHOTO / VISUAL BLOCK #1 ========================= -->
+  <section id="photos-1" class="section photos">
+    <div class="container">
+      <p class="eyebrow">Built & Imagined</p>
+      <h2 class="title">A few snapshots of scale, light, and texture.</h2>
+      <p class="subtitle">Images from recent feasibility studies and completed work around Central Illinois.</p>
+
+      <div class="photo-grid" style="margin-top: 18px;">
+        <div>
+          <img src="https://images.unsplash.com/photo-1505691723518-36a5ac3b2d8b?q=80&w=2000&auto=format&fit=crop" alt="Warm timber living room with courtyard view" />
+        </div>
+        <div>
+          <img src="https://images.unsplash.com/photo-1484154218962-a197022b5858?q=80&w=1600&auto=format&fit=crop" alt="Adaptive reuse café interior" />
+        </div>
+        <div>
+          <img src="https://images.unsplash.com/photo-1520722358376-6c0d9281568b?q=80&w=1600&auto=format&fit=crop" alt="Compact urban infill exterior" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================= ADVANTAGES / WHY US ========================= -->
+  <section class="section" id="advantages">
+    <div class="container">
+      <p class="eyebrow">Why It Works</p>
+      <h2 class="title">Three reasons clients keep sending their friends.</h2>
+
+      <div class="grid grid-3" style="margin-top: 16px;">
+        <div class="feature card pad">
+          <div class="icon">1</div>
+          <div>
+            <h3>Clarity from day one</h3>
+            <p class="muted">
+              We don’t hide the ball. You’ll see schedule, decisions, and costs in plain language. Our one-page
+              brief becomes the north star for you, us, and your builder.
+            </p>
+          </div>
+        </div>
+        <div class="feature card pad">
+          <div class="icon">2</div>
+          <div>
+            <h3>Drawings contractors trust</h3>
+            <p class="muted">
+              Our plan sets are complete and buildable, minimizing change orders. Contractors know what they’re pricing,
+              inspectors see the intent, and you get a smoother construction phase.
+            </p>
+          </div>
+        </div>
+        <div class="feature card pad">
+          <div class="icon">3</div>
+          <div>
+            <h3>Energy by design, not by gadget</h3>
+            <p class="muted">
+              We prioritize orientation, envelope, and shading—simple moves that work for decades.
+              Mechanical systems then right-size naturally, saving upfront and long-term.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================= DISTINCTIVES / WHAT SETS US APART ========================= -->
+  <section class="section compact" id="distinctives" style="background: var(--soft); border-top:1px solid #e5e7eb; border-bottom:1px solid #e5e7eb;">
+    <div class="container">
+      <p class="eyebrow">Our Edge</p>
+      <h2 class="title">What sets us apart from a bigger firm.</h2>
+      <div class="grid grid-3" style="margin-top: 8px;">
+        <div class="card pad">
+          <h3>Principal-led from kickoff to punch list</h3>
+          <p class="muted">You won’t be handed off to a revolving door of junior staff. Celeste Hall attends site walks, zoning meetings, and builder reviews with you.</p>
+        </div>
+        <div class="card pad">
+          <h3>Bids that compare apples to apples</h3>
+          <p class="muted">We prepare scope matrices so each contractor is pricing the same alternates and allowances. It keeps negotiations fair and transparent.</p>
+        </div>
+        <div class="card pad">
+          <h3>Right-sized sustainability</h3>
+          <p class="muted">From low-toxicity interiors to heat-pump retrofits, we propose measures that match your climate zone, utility rates, and maintenance capacity.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================= DEEPER DIVE INTO A SERVICE ========================= -->
+  <section class="section" id="deep-dive">
+    <div class="container">
+      <p class="eyebrow">Spotlight</p>
+      <h2 class="title">Adaptive Reuse: From vacancy to neighborhood anchor.</h2>
+      <div class="grid grid-2" style="align-items:center; margin-top: 10px;">
+        <div>
+          <p class="lead">Central Illinois is full of well-built shells—block walls, heavy timber, big windows. We help them work hard again.</p>
+          <ul class="muted" style="padding-left: 20px; margin-top: 10px;">
+            <li><strong>Change-of-Use Roadmaps:</strong> We outline occupancies, fire separations, egress, and required upgrades before you sign a lease.</li>
+            <li><strong>Acoustic & HVAC Upgrades:</strong> Quiet, zoned systems and absorbent finishes that make small spaces feel composed.</li>
+            <li><strong>Street Presence:</strong> Storefront proportions, signage, and lighting that read clearly from a car or on foot.</li>
+          </ul>
+          <p class="muted">Deliverables typically include a code summary, permit drawings, finish schedules, and a contractor coordination log.</p>
+        </div>
+        <div class="card">
+          <img src="https://images.unsplash.com/photo-1529421308418-8c6745f0b6df?q=80&w=1800&auto=format&fit=crop" alt="Reworked brick commercial shell with new storefront" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================= MISSION & GOALS ========================= -->
+  <section class="section compact" id="mission" style="background:#ffffff; border-top:1px solid #e5e7eb;">
+    <div class="container">
+      <p class="eyebrow">Purpose</p>
+      <h2 class="title">Our goals are practical—and measurable.</h2>
+      <div class="kpis" style="margin-top: 12px;">
+        <div class="kpi"><div class="n">≤ 10%</div><div class="muted">construction change orders</div></div>
+        <div class="kpi"><div class="n">20–30%</div><div class="muted">lower heating load vs. code</div></div>
+        <div class="kpi"><div class="n">2 weeks</div><div class="muted">typical permit review</div></div>
+        <div class="kpi"><div class="n">4 site visits</div><div class="muted">during construction</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================= PHOTO / VISUAL BLOCK #2 ========================= -->
+  <section id="photos-2" class="section photos">
+    <div class="container">
+      <p class="eyebrow">Materials & Moments</p>
+      <h2 class="title">Quiet palettes that age gracefully.</h2>
+      <div class="photo-grid" style="margin-top: 18px;">
+        <div>
+          <img src="https://images.unsplash.com/photo-1542928658-22258d42e8ca?q=80&w=2000&auto=format&fit=crop" alt="Brick addition that blends with historic context" />
+        </div>
+        <div>
+          <img src="https://images.unsplash.com/photo-1538688423619-a81d3f23454b?q=80&w=1600&auto=format&fit=crop" alt="Serene kitchen with daylight" />
+        </div>
+        <div>
+          <img src="https://images.unsplash.com/photo-1464146072230-91cabc968266?q=80&w=1600&auto=format&fit=crop" alt="Compact courtyard with cedar cladding" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================= SOLUTIONS (SECONDARY SERVICES) ========================= -->
+  <section id="solutions" class="section" style="background: #ffffff; border-top: 1px solid #e5e7eb; border-bottom:1px solid #e5e7eb;">
+    <div class="container">
+      <p class="eyebrow">Our Solutions</p>
+      <h2 class="title">Small add-ons that unlock big value.</h2>
+      <div class="grid grid-3" style="margin-top: 10px;">
+        <div class="card pad">
+          <h3>Energy & Envelope Check-Up</h3>
+          <p class="muted">A concise review of R-values, window specs, and air-sealing strategies tailored to our climate zone. Expect a two-page action list with payback estimates.</p>
+        </div>
+        <div class="card pad">
+          <h3>Permit Rescue</h3>
+          <p class="muted">If your project stalled at the counter, we can step in to assemble missing details, coordinate engineers, and present revisions to the reviewer.</p>
+        </div>
+        <div class="card pad">
+          <h3>Finish & Fixture Packages</h3>
+          <p class="muted">We curate durable, easy-to-clean interiors—low-VOC paints, resilient floors, and lighting that renders skin tones naturally.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================= PROCESS (WITH STEPS) ========================= -->
+  <section id="process" class="section">
+    <div class="container">
+      <p class="eyebrow">How We Work</p>
+      <h2 class="title">A three-stage path from first sketch to keys in hand.</h2>
+
+      <div class="timeline" style="margin-top: 10px;">
+        <div class="stage card pad">
+          <div class="step">01 • Mapping</div>
+          <h3 class="subtitle" style="margin: 4px 0 6px;">Listen, test, decide</h3>
+          <p class="muted">
+            We meet on site, take quick measurements, review surveys, and gather your wishlist. In two weeks we return with
+            two design directions and an outline budget so you can choose a path with confidence.
+          </p>
+        </div>
+
+        <div class="stage card pad">
+          <div class="step">02 • Detailing</div>
+          <h3 class="subtitle" style="margin: 4px 0 6px;">Drawings that get built</h3>
+          <p class="muted">
+            Selected concept becomes a permit set: plans, elevations, wall sections, window/door schedules, and specifications.
+            We coordinate structural and MEP engineers, then help you solicit comparable bids.
+          </p>
+        </div>
+
+        <div class="stage card pad">
+          <div class="step">03 • Building</div>
+          <h3 class="subtitle" style="margin: 4px 0 6px;">Guardrails during construction</h3>
+          <p class="muted">
+            We visit at milestones—foundation, framing, insulation, finishes—answer RFIs, review pay apps, and keep the project aligned
+            with the drawings and your budget. You move in with a tidy punch list and an as-built set.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================= CONTACT FORM PHRASES + FORM ========================= -->
+  <section id="contact" class="section" style="background: #ffffff;">
+    <div class="container">
+      <p class="eyebrow">Let’s Talk</p>
+      <h2 class="title">Tell us about your site, your timing, and what “good” looks like.</h2>
+      <p class="subtitle">Use the prompts below—short answers are fine. We’ll respond within two business days.</p>
+
+      <!-- Phrases for the contact form (as requested) -->
+      <div class="grid grid-3" style="margin: 10px 0 22px;">
+        <div class="card pad">
+          <h3>Helpful prompts</h3>
+          <ul class="muted" style="padding-left: 20px; margin: 8px 0 0;">
+            <li>“Our site is at … and the lot is roughly …”</li>
+            <li>“We hope to start construction in … and move in by …”</li>
+            <li>“Success would feel like … (three bullets are great)”</li>
+          </ul>
+        </div>
+        <div class="card pad">
+          <h3>Budget & scope</h3>
+          <ul class="muted" style="padding-left: 20px; margin: 8px 0 0;">
+            <li>Approximate all-in budget range</li>
+            <li>Square footage or room list</li>
+            <li>Any required phasing (now vs. later)</li>
+          </ul>
+        </div>
+        <div class="card pad">
+          <h3>Approvals</h3>
+          <ul class="muted" style="padding-left: 20px; margin: 8px 0 0;">
+            <li>Historic district or HOA?</li>
+            <li>Utilities to confirm?</li>
+            <li>Accessibility goals?</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Actual form UI -->
+      <div class="card pad">
+        <form onsubmit="event.preventDefault(); document.getElementById('form-success').hidden=false; this.reset();">
+          <div class="form-row">
+            <div>
+              <label for="name" class="subtitle">Full Name</label>
+              <input id="name" name="name" placeholder="Alex Morgan" required />
+            </div>
+            <div>
+              <label for="email" class="subtitle">Email</label>
+              <input id="email" type="email" name="email" placeholder="you@example.com" required />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div>
+              <label for="phone" class="subtitle">Phone (optional)</label>
+              <input id="phone" name="phone" placeholder="(xxx) xxx-xxxx" />
+            </div>
+            <div>
+              <label for="service" class="subtitle">I’m interested in</label>
+              <select id="service" name="service">
+                <option>Custom Home / Major Renovation</option>
+                <option>Adaptive Reuse / Small Commercial</option>
+                <option>Pre-Design & Feasibility</option>
+                <option>Not sure yet — please advise</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div>
+              <label for="location" class="subtitle">Project Address or City</label>
+              <input id="location" name="location" placeholder="Bloomington, IL or exact address" />
+            </div>
+            <div>
+              <label for="timeline" class="subtitle">Target Timeline</label>
+              <input id="timeline" name="timeline" placeholder="e.g., start spring 2026, move-in spring 2027" />
+            </div>
+          </div>
+
+          <div>
+            <label for="budget" class="subtitle">Budget Range</label>
+            <input id="budget" name="budget" placeholder="$XXXk – $X.XM (all-in including construction)" />
+          </div>
+
+          <div>
+            <label for="message" class="subtitle">Tell us about your goals</label>
+            <textarea id="message" name="message" placeholder="Top three priorities, any must-haves, and why now."></textarea>
+          </div>
+
+          <div class="form-row">
+            <div>
+              <label for="how" class="subtitle">How did you hear about us?</label>
+              <input id="how" name="how" placeholder="Referral, Realtor, Builder, Web, Other" />
+            </div>
+            <div>
+              <label for="files" class="subtitle">Share plans or photos (link)</label>
+              <input id="files" name="files" placeholder="Dropbox/Drive link (optional)" />
+            </div>
+          </div>
+
+          <div class="form-note">
+            By submitting, you agree that we may email you about this inquiry. We never share your contact information.
+          </div>
+
+          <div style="display:flex; gap:12px; align-items:center; margin-top: 6px;">
+            <button class="btn" type="submit">Send Inquiry</button>
+            <a class="btn ghost" href="mailto:info@hallhopkinsarchitecture.info">Email Instead</a>
+          </div>
+
+          <p id="form-success" class="tag" hidden role="status" aria-live="polite" style="margin-top: 10px;">Thanks! We’ll be in touch within two business days.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================= CONTACTS / ADDRESS ========================= -->
+  <section id="contacts" class="section compact">
+    <div class="container">
+      <p class="eyebrow">Visit or Reach Out</p>
+      <h2 class="title">Studio & Contacts</h2>
+
+      <div class="grid grid-2" style="margin-top: 8px;">
+        <div class="card pad">
+          <h3>Address</h3>
+          <p class="muted">1 Marvin Gdns, Bloomington, IL 61701-1453, United States</p>
+          <p class="muted">By appointment only. Street parking available along the block.</p>
+        </div>
+        <div class="card pad">
+          <h3>Contact</h3>
+          <p class="muted">Email: <a href="mailto:info@hallhopkinsarchitecture.info">info@hallhopkinsarchitecture.info</a></p>
+          <p class="muted">For builders and consultants: please include project name and RFI number in subject lines.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================= FOOTER ========================= -->
+  <footer role="contentinfo">
+    <div class="container foot-grid">
+      <div>
+        <div class="brand" style="margin-bottom: 8px;">
+          <div class="logo" aria-hidden="true"></div>
+          <strong>Hall Hopkins Architecture LLC</strong>
+        </div>
+        <p class="muted" style="margin:6px 0 0;">
+          Context-driven architecture for homes and small businesses across Central Illinois.
+          © <span id="year"></span> Hall Hopkins Architecture LLC. All rights reserved.
+        </p>
+      </div>
+      <div>
+        <p class="muted" style="margin:0 0 6px;"><strong>Quick links</strong></p>
+        <div style="display:flex; gap:12px; flex-wrap:wrap;">
+          <a href="#services" class="tag">Services</a>
+          <a href="#process" class="tag">Our Process</a>
+          <a href="#photos-1" class="tag">Portfolio</a>
+          <a href="#contact" class="tag">Start a Project</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // tiny enhancement for year and smooth scrolling
+    document.getElementById('year').textContent = new Date().getFullYear();
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', e=>{
+        const id = a.getAttribute('href').slice(1);
+        const el = document.getElementById(id);
+        if(el){ e.preventDefault(); el.scrollIntoView({behavior:'smooth', block:'start'}); }
+      });
+    });
+
+  </script>
+
+</body>
+</html>
